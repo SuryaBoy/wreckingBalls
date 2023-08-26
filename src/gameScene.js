@@ -47,8 +47,8 @@ class GameScene extends Phaser.Scene {
 
 	preload() {
 		console.log("gameScene");
-	    this.load.image('ball', '../assets/ball.png');
-	    this.load.image('pan', '../assets/pan.png');
+	    this.load.image('ball', '../assets/ball3.png');
+	    this.load.image('pan', '../assets/pan5.png');
 	    // this.load.audio('panSound','../assets/panSound.ogg')
 	    this.load.audio('brickSound','../assets/brickSound.ogg')
 	    this.load.audio('selectSound','../assets/select.ogg')
