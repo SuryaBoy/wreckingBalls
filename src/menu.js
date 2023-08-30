@@ -31,7 +31,7 @@ class MenuScene extends Phaser.Scene {
 		startButton.setInteractive({useHandCursor:true});
 		startButton.on('pointerdown', () => this.clickButton())
 		this.textStyle.wordWrap = {width : 0.9*this.scale.displaySize.width}
-		const wellMessage = this.add.text(0,0,"Welcome\nTo The Brick Bang",this.textStyle)
+		const wellMessage = this.add.text(0,0,"Welcome\nTo The Wrecking Balls",this.textStyle)
 		wellMessage.x = this.scale.displaySize.width/2 - wellMessage.width/2;
 		wellMessage.y = startButton.y - wellMessage.height - 100;
         wellMessage.setStroke('#de77ae', 7);

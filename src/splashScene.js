@@ -25,7 +25,7 @@ class SplashScene extends Phaser.Scene {
 	    // Get the center position of the game screen
 	    this.centerX = this.cameras.main.width / 2;
 	    this.centerY = this.cameras.main.height / 2;
-		this.splashText = this.add.text(0,0,'Brick Bang', this.splashTextStyle);
+		this.splashText = this.add.text(0,0,'Wrecking Balls', this.splashTextStyle);
 		this.splashText.setPosition(this.centerX - this.splashText.width/2, this.centerY - this.splashText.height/2);
         this.splashText.setStroke('#de77ae', 7);
 
