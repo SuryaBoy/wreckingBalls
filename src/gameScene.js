@@ -30,7 +30,7 @@ class GameScene extends Phaser.Scene {
 		this.screenHeight = null;
 		this.staticBricks = null;
 		this.levels = null;
-		this.currentLevel = 0;
+		this.currentLevel = 9;
 		this.gameMusic = null;
 		this.gamePaused = false;
 	}
@@ -56,6 +56,7 @@ class GameScene extends Phaser.Scene {
 	    this.load.audio('levelUpSound','../assets/levelUp.ogg')
 	    this.load.audio('powerUpSound','../assets/powerUp.ogg')
 		this.load.audio('gameMusic','../assets/gameMusic.mp3')
+		this.load.json('levelsData', '../src/levels.json');
 	}
 
 	handlePointerMove(pointer) {
@@ -76,80 +77,10 @@ class GameScene extends Phaser.Scene {
 	    this.pan.setCollideWorldBounds(true);
 	    this.pan.setImmovable(true);
 
-		this.levels = [
-		  { 
-		  	ballYVelocity : this.screenHeight/2,
-		  	brickLayout: [
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[2,0,2,0,2,0,2,0,2,0],
-		  	],
-		  }, 
-		  { 
-		  	ballYVelocity : this.screenHeight/2,
-		  	brickLayout: [
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[0,0,0,0,0,0,0,0,0,0],
-		  		[1,1,1,1,1,1,2,1,1,1],
-		  		[2,0,1,0,2,0,1,0,1,0],
-		  		[0,1,0,1,0,1,0,2,0,1],
-		  		[1,0,1,0,1,0,1,0,1,0],
-		  	],
-		  }, 
-		  {
-		  	ballYVelocity : (this.screenHeight/2)+1,
-		  	brickLayout: [
-		  		[0,0,0,1,1,1,1,0,0,0],
-		  		[0,1,1,1,1,1,1,1,0,0],
-		  		[0,1,1,1,0,1,1,1,1,0],
-		  		[1,2,0,1,0,1,0,1,1,1],
-		  		[0,1,1,1,1,2,1,1,1,0],
-		  		[0,0,0,1,1,1,1,0,0,0],
-		  	],
-		  },
-		  {
-		  	ballYVelocity : (this.screenHeight/2)+2,
-		  	brickLayout: [
-		  		[2,0,0,0,1,1,0,0,0,2],
-		  		[0,0,0,0,1,2,0,0,0,0],
-		  		[0,0,0,1,0,0,1,0,0,0],
-		  		[0,0,1,0,0,0,0,1,0,0],
-		  		[0,1,1,1,1,1,1,1,1,0],
-		  		[1,0,0,0,0,0,0,0,0,1],
-		  	],
-		  },
-		  {
-		  	ballYVelocity : (this.screenHeight/2)+2,
-		  	brickLayout: [
-		  		[1,0,0,0,0,0,0,0,0,1],
-		  		[0,1,0,0,2,2,0,0,1,0],
-		  		[0,0,1,0,0,0,0,1,0,0],
-		  		[0,2,0,1,0,0,1,0,0,0],
-		  		[0,0,0,0,1,1,0,0,0,0],
-		  		[2,2,0,0,1,1,0,0,2,2],
-		  		[0,0,0,1,0,0,1,0,0,0],
-		  		[0,0,1,0,0,0,0,1,0,0],
-		  		[0,1,0,0,2,2,0,0,1,0],
-		  		[1,0,0,0,0,0,0,0,0,1],
-		  	],
-		  },
-		  { 
-		  	ballYVelocity : (this.screenHeight/2)+4,
-		  	brickLayout: [
-		  		[1,0,1,0,1,0,1,0,1,0],
-		  		[0,1,0,1,0,1,0,1,0,1],
-		  		[1,0,1,0,1,0,2,0,1,0],
-		  		[2,0,1,0,2,0,1,0,1,0],
-		  		[0,1,0,1,0,1,0,2,0,1],
-		  		[1,0,1,0,1,0,1,0,1,0],
-		  	],
-		  },
-		  // Add more levels as needed
-		];
+		const levelsData = this.cache.json.get('levelsData');
+		this.levels = levelsData.levels;
 
+		console.log(this.levels);
 	    this.balls = this.physics.add.group();
 	    this.addBallonPan(this.pan)
 	    this.physics.add.collider(this.balls, this.pan, this.panBallCollide, null,this);
@@ -411,7 +342,7 @@ class GameScene extends Phaser.Scene {
 		const bricksForLevel = this.createBricksForLevel(this.levels[this.currentLevel]);
 
 		// initialize the velocity of ball based on the level
-		this.ballYVel = this.levels[this.currentLevel].ballYVelocity;
+		this.ballYVel = this.levels[this.currentLevel].velocityIncrement + (this.screenHeight/2);
 		// Other level-specific setup
 
 		// Add bricksForLevel to your scene as needed
